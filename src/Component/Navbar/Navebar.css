@@ -1,3 +1,7 @@
+.brand{
+    font-size: 30px;
+    font-weight: 700;
+}
 .navbar{
     display: flex;
     justify-content: space-between;
@@ -13,4 +17,9 @@ font-size: 17px;
 .link:hover{
     color: rgb(0, 106, 0);
     
+}
+.userimg{
+    width: 10%;
+    border: 1px solid black;
+    border-radius: 50%;
 }
