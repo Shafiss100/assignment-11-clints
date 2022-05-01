@@ -1,6 +1,6 @@
 import React from "react";
 import { signOut } from "firebase/auth";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import {  Nav, Navbar } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "../../Firebase/Firebase.init";
@@ -11,10 +11,10 @@ const Navebar = () => {
   return (
     <div>
       <Navbar
-        className="navber container mb-5 d-flex d-flex justify-content-around"
+        className="navber ms-5  mb-5 "
         variant="light"
       >
-        <Navbar.Brand href="/" className="brand w-50">
+        <Navbar.Brand href="/" className="brand w-25">
           <span className="text-success">Big</span>
           <span>Bazar</span>
           <span className="text-secondary">.com</span>
@@ -24,7 +24,10 @@ const Navebar = () => {
             Home
           </Link>
           <Link className=" link" to={"/inventory"}>
-            Inventory
+           Manage Inventory
+          </Link>
+          <Link className=" link" to={"/inventory"}>
+           My Inventory
           </Link>
           <Link className=" link" to={"/addinvent"}>
             Add Inventory
@@ -41,11 +44,7 @@ const Navebar = () => {
               Login
             </Link>
           )}
-          {user ? (
-            <img className="userimg" src={user.photoURL} alt="" />
-          ) : (
-            <p></p>
-          )}
+
         </Nav>
       </Navbar>
     </div>

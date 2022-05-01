@@ -1,8 +1,18 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+ import { ToastContainer, toast } from "react-toastify";
+
+ import "react-toastify/dist/ReactToastify.css";
 
 const AddInventory = () => {
-    const productinfo = (event) => {
+  const navigate = useNavigate();
+  const productinfo = (event) => {
+    const tost = (message) => {
+      toast(message);
+      navigate("/inventory");
+      
+    } 
         event.preventDefault();
         const name = event.target.productName.value;
         const img = event.target.imglink.value;
@@ -10,7 +20,6 @@ const AddInventory = () => {
         const quantity = event.target.quantity.value;
         const info = event.target.info.value;
         const supliarName = event.target.supliarName.value;
-        console.log(name, img, price, quantity, info, supliarName);
         fetch("http://localhost:5000/post", {
           method: "POST",
           body: JSON.stringify({
@@ -26,7 +35,11 @@ const AddInventory = () => {
           },
         })
           .then((response) => response.json())
-          .then((json) => console.log(json));
+          .then((data) => {
+            if (data.success) {
+              tost(data.success);
+             }
+          });
         
     }
     
@@ -96,6 +109,7 @@ const AddInventory = () => {
 
            <input type="submit" className="btn bg-info border " value="post" />
          </Form>
+         <ToastContainer />
        </div>
      );
 };
