@@ -10,6 +10,7 @@ import AddInventory from "./Component/AddInventory/AddInventory";
 import Blog from "./Component/Blog/Blog";
 import NotFound from "./Component/NotFound/NotFound";
 import RequireAuth from "./Component/RequireAuth/RequireAuth";
+import Update from "./Component/Update/Update";
 
 
 
@@ -33,6 +34,7 @@ function App() {
           }
         />
         <Route path="/blog" element={<Blog></Blog>} />
+        <Route path="/update/:id" element={<Update/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

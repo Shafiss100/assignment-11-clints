@@ -28,7 +28,7 @@ const AddInventory = () => {
             price,
             quantity,
             info,
-            supliarName,
+            supliarName
           }),
           headers: {
             "Content-type": "application/json; charset=UTF-8",

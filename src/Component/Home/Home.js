@@ -7,7 +7,7 @@ import { ArrowCircleRightIcon, ArrowRightIcon } from "@heroicons/react/solid";
 const Home = () => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/productslisthome?card=6")
+    fetch("http://localhost:5000/productslisthome")
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
