@@ -11,6 +11,7 @@ import Blog from "./Component/Blog/Blog";
 import NotFound from "./Component/NotFound/NotFound";
 import RequireAuth from "./Component/RequireAuth/RequireAuth";
 import Update from "./Component/Update/Update";
+import MyInventory from "./Component/MyInventory/MyInventory";
 
 
 
@@ -34,10 +35,24 @@ function App() {
           }
         />
         <Route path="/blog" element={<Blog></Blog>} />
-        <Route path="/update/:id" element={<Update/>} />
+        <Route
+          path="/update/:id"
+          element={
+            <RequireAuth>
+              <Update />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/myinvent"
+          element={
+            <RequireAuth>
+              <MyInventory/>
+            </RequireAuth>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
-
     </div>
   );
 }

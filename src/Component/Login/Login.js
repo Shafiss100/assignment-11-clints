@@ -6,9 +6,10 @@ import {
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import auth from "../../Firebase/Firebase.init";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, euser, eloading, eerror] =
     useSignInWithEmailAndPassword(auth);
@@ -17,11 +18,13 @@ const Login = () => {
     const email = event.target.email.value;
     const password = event.target.password.value;
     signInWithEmailAndPassword(email, password);
+    navigate("/");
   };
   //  --------   gooogle log in--------
   const googlelogin = (event) => {
     event.preventDefault();
     signInWithGoogle();
+    navigate("/")
   };
 
   return (

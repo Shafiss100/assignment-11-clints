@@ -52,10 +52,9 @@ const Home = () => {
           <h1>Invnentory</h1>
           <div className="cards">
             {products.map((product) => (
-              <div>
+              <div key={product._id}>
                 <Card
                   className="card"
-                  key={product._id}
                   style={{ width: "15rem", height: "22rem" }}
                 >
                   <Card.Img
@@ -86,30 +85,55 @@ const Home = () => {
           </div>
           <div className="w-50 ">
             <h1>Information</h1>
-            <h4><br/>
-              1. This website is most largest website in bangladesh for shifing.Our help line always open 24h / 7day
-            </h4><br/>
-            <h4><br/>2. Here all the product are januin product</h4><br/>
-            <h4><br/>3. You can get a dealer shif and can grow your own buisness</h4><br/>
-            <h4><br/>
+            <h4>
+              <br />
+              1. This website is most largest website in bangladesh for
+              shifing.Our help line always open 24h / 7day
+            </h4>
+            <br />
+            <h4>
+              <br />
+              2. Here all the product are januin product
+            </h4>
+            <br />
+            <h4>
+              <br />
+              3. You can get a dealer shif and can grow your own buisness
+            </h4>
+            <br />
+            <h4>
+              <br />
               4. For the commersial website we are always beside you.
-            </h4><br/>
+            </h4>
+            <br />
           </div>
         </section>
         <section className="container d-flex align-middle">
           <div className="w-50  ">
             <h1>Our terms and condition</h1>
-            <h4><br/>
+            <h4>
+              <br />
               1. This website is only for electronic devices like mobile, ac,
               tv, monitor, laptop, dextop, dextop elements, fridge etc. plese
               dont post any other chatagory device.
-            </h4><br/>
-            <h4><br/>2. Dont remove your product before 3 days.</h4><br/>
-            <h4><br/>3. Dont post any unuseal things</h4><br/>
-            <h4><br/>
+            </h4>
+            <br />
+            <h4>
+              <br />
+              2. Dont remove your product before 3 days.
+            </h4>
+            <br />
+            <h4>
+              <br />
+              3. Dont post any unuseal things
+            </h4>
+            <br />
+            <h4>
+              <br />
               4. after select any product you can see your choosen product in
               (my inventory) . dont uncelect your product after 2 days.
-            </h4><br/>
+            </h4>
+            <br />
           </div>
           <div className="w-50">
             <img

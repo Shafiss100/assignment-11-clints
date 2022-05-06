@@ -1,9 +1,10 @@
 import React from 'react';
 import { Form, ToastContainer } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Update = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const productinfo = (event) => {
         event.preventDefault();
         const name = event.target.productName.value;
@@ -27,7 +28,13 @@ const Update = () => {
           },
         })
           .then((response) => response.json())
-          .then((json) => console.log(json));
+            .then((data) => {
+                if (data.modifiedCount) {
+                    window.confirm("done");
+                    navigate("/inventory");
+                };
+             
+          });
     }
     return (
       <div>
