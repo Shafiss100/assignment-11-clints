@@ -8,23 +8,36 @@ import {
 import auth from "../../Firebase/Firebase.init";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login =  () => {
   const navigate = useNavigate();
   const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, euser, eloading, eerror] =
     useSignInWithEmailAndPassword(auth);
-  const emailLogin = (event) => {
+  const emailLogin = async(event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    signInWithEmailAndPassword(email, password);
-    navigate("/");
-  };
+    await signInWithEmailAndPassword(email, password);
+    await fetch("http://localhost:5000/token", {
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        localStorage.setItem('accessToken', data.accessToken);
+      });
+        navigate("/");
+      };
   //  --------   gooogle log in--------
   const googlelogin = (event) => {
     event.preventDefault();
     signInWithGoogle();
-    navigate("/")
+    navigate("/");
   };
 
   return (

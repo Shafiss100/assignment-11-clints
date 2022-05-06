@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Card, Toast } from "react-bootstrap";
+import { Card, } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./inventory.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../Firebase/Firebase.init";
-import { toast } from "react-toastify";
+import { toast,ToastContainer } from "react-toastify";
 
 const Inventory = () => {
   const [products, setProducts] = useState([]);
@@ -18,37 +18,48 @@ const Inventory = () => {
 
   // -------card delete---====
   const deleteCard = (event) => {
-    fetch(`http://localhost:5000/delete/${event}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    if (user) {
+      fetch(`http://localhost:5000/delete/${event}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+      const reload = products.filter(product => product._id !== event);
+      setProducts(reload);
+    }
+    else {
+      toast("You are not login");
+    }
   };
 
   // -------- add card to my inventory---------
   const addOrder = event => {
-    fetch("http://localhost:5000/order", {
-      method: "POST",
-      body: JSON.stringify({
-        email: user.email,
-        name: event.name,
-        img: event.img,
-        price: event.price,
-        quantity: event.quantity,
-        info:event.info,
-        supliarName: event.supliarName
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.success);
-        toast(data.success);
-      });
+    if (user) {
+      fetch("http://localhost:5000/order", {
+        method: "POST",
+        body: JSON.stringify({
+          email: user.email,
+          name: event.name,
+          img: event.img,
+          price: event.price,
+          quantity: event.quantity,
+          info: event.info,
+          supliarName: event.supliarName,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          toast("one item add.... go to (my inventory) and select quantity");
+        });
+    }
+    else {
+      toast("you are not login")
+    }
   }
 
   return (
@@ -82,11 +93,15 @@ const Inventory = () => {
                 <Link to={`/update/${product._id}`}>
                   <button className="btn bg-info">Update</button>
                 </Link>
-                <button onClick={()=>addOrder(product)} className="btn bg-info ">
+                <button
+                  onClick={() => addOrder(product)}
+                  className="btn bg-info "
+                >
                   add
                 </button>
               </Card.Body>
             </Card>
+            <ToastContainer />
           </div>
         ))}
       </div>
