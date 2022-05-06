@@ -5,13 +5,19 @@ import auth from '../../Firebase/Firebase.init';
 
 const MyInventory = () => {
     const [orders, setOrders] = useState([]);
-    const [user] = useAuthState(auth);
+  const [user] = useAuthState(auth);
+  const deleteOrder = (event) => {
+    console.log(event)
+    fetch(`http://localhost:5000/orderdelete?id=${event}`, {
+      method: "DELETE",
+    });
+  }
 
     useEffect(() => {
         fetch(`http://localhost:5000/orderlist?email=${user.email}`)
           .then((res) => res.json())
           .then((data) => setOrders(data));
-    },[])
+    },[user])
     return (
       <div>
         <div className="cards">
@@ -34,20 +40,11 @@ const MyInventory = () => {
                   <Card.Text>
                     Description: {order.info}
                   </Card.Text>
-                  {/* <button
-                    onClick={() => deleteCard(order._id)}
+                  <button
+                    onClick={() => deleteOrder(order._id)}
                     className="btn bg-info"
                   > delete
-                  </button> */}
-                  {/* <Link to={`/update/${order._id}`}>
-                    <button className="btn bg-info">Update</button>
-                  </Link>
-                  <button
-                    onClick={() => addOrder(order)}
-                    className="btn bg-info "
-                  >
-                    add
-                  </button> */}
+                  </button>
                 </Card.Body>
               </Card>
             </div>
