@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Card, } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./inventory.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../Firebase/Firebase.init";
-import { toast,ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const Inventory = () => {
   const [products, setProducts] = useState([]);
   const [user] = useAuthState(auth);
-  
+
+  // -------load all product in inventory-------
+
   useEffect(() => {
     fetch("http://localhost:5000/productslist")
       .then((res) => res.json())
-      .then((data) => setProducts(data));
+      .then((data) => {
+        setProducts(data);
+      });
   }, []);
 
   // -------card delete---====
@@ -26,25 +30,25 @@ const Inventory = () => {
         .then((data) => {
           console.log(data);
         });
-      const reload = products.filter(product => product._id !== event);
+      const reload = products.filter((product) => product._id !== event);
       setProducts(reload);
-    }
-    else {
+    } else {
       toast("You are not login");
     }
   };
 
   // -------- add card to my inventory---------
-  const addOrder = event => {
+  const addOrder = (event) => {
     if (user) {
       fetch("http://localhost:5000/order", {
         method: "POST",
         body: JSON.stringify({
+          id: event._id,
           email: user.email,
           name: event.name,
           img: event.img,
           price: event.price,
-          quantity: event.quantity,
+          quantity: 0,
           info: event.info,
           supliarName: event.supliarName,
         }),
@@ -54,23 +58,19 @@ const Inventory = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          toast("one item add.... go to (my inventory) and select quantity");
+          toast("one item add");
         });
+    } else {
+      toast("you are not login");
     }
-    else {
-      toast("you are not login")
-    }
-  }
+  };
 
   return (
     <div className="">
-      <div className="w-100">
-        <Link to={"/addinvent"}>add more item</Link>
-      </div>
-      <div className="cards">
+      <div className="cards w-75">
         {products.map((product) => (
           <div key={product._id}>
-            <Card className="card" style={{ width: "15rem", height: "33rem" }}>
+            <Card className="card" style={{ width: "19rem", height: "35rem" }}>
               <Card.Img
                 className="card-image"
                 variant="top"
@@ -86,18 +86,18 @@ const Inventory = () => {
                 </Card.Text>
                 <button
                   onClick={() => deleteCard(product._id)}
-                  className="btn bg-info"
+                  className="btn bg-info m-1"
                 >
                   delete
                 </button>
                 <Link to={`/update/${product._id}`}>
-                  <button className="btn bg-info">Update</button>
+                  <button className="btn bg-info m-1">Update</button>
                 </Link>
                 <button
                   onClick={() => addOrder(product)}
-                  className="btn bg-info "
+                  className="btn bg-info m-1"
                 >
-                  add
+                  shift
                 </button>
               </Card.Body>
             </Card>

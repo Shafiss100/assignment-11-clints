@@ -2,22 +2,33 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 import "./Login.css";
 import {
+  useAuthState,
+  useSendEmailVerification,
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import auth from "../../Firebase/Firebase.init";
 import { Link, useNavigate } from "react-router-dom";
+import { sendSignInLinkToEmail } from "firebase/auth";
 
-const Login =  () => {
+const Login = () => {
   const navigate = useNavigate();
   const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
+  const [user] = useAuthState(auth);
   const [signInWithEmailAndPassword, euser, eloading, eerror] =
     useSignInWithEmailAndPassword(auth);
-  const emailLogin = async(event) => {
+  const emailLogin = async (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
     await signInWithEmailAndPassword(email, password);
+    sendSignInLinkToEmail(auth, email)
+      .then(() => {
+        window.localStorage.setItem("emailForSignIn", email);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
     await fetch("http://localhost:5000/token", {
       method: "POST",
       body: JSON.stringify({
@@ -29,10 +40,14 @@ const Login =  () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem("accessToken", data.accessToken);
       });
-        navigate("/");
-      };
+
+    if (user) {
+      navigate("/");
+      
+    } 
+  };
   //  --------   gooogle log in--------
   const googlelogin = (event) => {
     event.preventDefault();
@@ -60,6 +75,7 @@ const Login =  () => {
             placeholder="Password"
           />
         </Form.Group>
+        {eerror ? <p className="m-3 text-danger">{eerror.message}</p> : <></>}
         <input type="submit" className="btn bg-info border" value="log in" />
 
         <div className="w-100 ">

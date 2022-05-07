@@ -1,11 +1,15 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
  import { ToastContainer, toast } from "react-toastify";
 
  import "react-toastify/dist/ReactToastify.css";
+import auth from '../../Firebase/Firebase.init';
 
 const AddInventory = () => {
+  const [user] = useAuthState(auth);
+  console.log(user)
   const navigate = useNavigate();
   const productinfo = (event) => {
     const tost = (message) => {
@@ -89,7 +93,7 @@ const AddInventory = () => {
              <Form.Control
                type="text"
                name="supliarName"
-               placeholder="Name"
+               value={user.displayName}
                required
              />
            </Form.Group>
