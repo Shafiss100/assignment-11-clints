@@ -58,7 +58,7 @@ const Inventory = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          toast("one item add");
+          toast("one item add to your inventory");
         });
     } else {
       toast("you are not login");
@@ -67,7 +67,7 @@ const Inventory = () => {
 
   return (
     <div className="">
-      <div className="cards w-75">
+      <div className="cards inventory-cards w-75">
         {products.map((product) => (
           <div key={product._id}>
             <Card className="card" style={{ width: "19rem", height: "35rem" }}>
@@ -101,10 +101,51 @@ const Inventory = () => {
                 </button>
               </Card.Body>
             </Card>
+
             <ToastContainer />
           </div>
         ))}
       </div>
+      <table className="table table-striped ">
+        <thead>
+          <tr>
+            <th scope="col">Stock Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">quantity</th>
+            <th scope="col">supliar Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Button</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr>
+              <th scope="row">{product.name}</th>
+              <td>{product.price}$</td>
+              <td>{product.quantity}</td>
+              <td>{product.supliarName}</td>
+              <td>{product.info.slice(0, 40)}...</td>
+              <td>
+                <button
+                  onClick={() => deleteCard(product._id)}
+                  className="btn bg-danger m-1"
+                >
+                  delete
+                </button>
+                <Link to={`/update/${product._id}`}>
+                  <button className="btn bg-warning m-1">Update</button>
+                </Link>
+                <button
+                  onClick={() => addOrder(product)}
+                  className="btn bg-info m-1"
+                >
+                  shift
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

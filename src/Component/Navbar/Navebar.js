@@ -21,7 +21,7 @@ const Navebar = () => {
             Home
           </Link>
           <Link className=" link" to={"/inventory"}>
-            Manage Inventory
+            All Inventory
           </Link>
           <Link className=" link" to={"/myinvent"}>
             My Inventory

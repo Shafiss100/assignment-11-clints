@@ -45,8 +45,7 @@ const Login = () => {
 
     if (user) {
       navigate("/");
-      
-    } 
+    }
   };
   //  --------   gooogle log in--------
   const googlelogin = (event) => {

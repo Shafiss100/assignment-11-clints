@@ -3,3 +3,34 @@
     grid-gap: 10px;
     grid-template-columns: repeat(5,1fr);
 }
+
+.inventory-cards{
+    display: none;
+}
+.table{
+   
+    margin-right: 10%;
+}
+.addcards{
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(3,1fr);
+}
+.myinventory-body{
+    display: flex;}
+@media only screen and (min-width: 78px) and (max-width:700px) {
+    .cards{
+        margin: auto;
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: repeat(1,1fr);}
+    
+    .table{
+        display: none;
+    }
+    .myinventory-body{
+     display: block;}
+     .inventory-cards{
+    display: flex;
+}
+}
